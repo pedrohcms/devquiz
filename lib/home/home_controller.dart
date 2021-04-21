@@ -18,6 +18,8 @@ class HomeController {
   void getUser() async {
     state = HomeState.loading;
 
+    await Future.delayed(Duration(seconds: 3));
+
     user = await repository.getUser();
 
     state = HomeState.sucess;
@@ -25,6 +27,8 @@ class HomeController {
 
   void getQuizzes() async {
     state = HomeState.loading;
+
+    await Future.delayed(Duration(seconds: 3));
 
     quizzes = await repository.getQuizzes();
 
