@@ -35,7 +35,7 @@ class QuizModel {
     this.questionAnswered = 0,
     required this.image,
     required this.level,
-  }) : assert(questions.length == 4);
+  });
 
   Map<String, dynamic> toMap() {
     return {
