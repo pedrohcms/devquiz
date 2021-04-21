@@ -54,7 +54,7 @@ class QuizModel {
           map['questions']?.map((x) => QuestionModel.fromMap(x))),
       questionAnswered: map['questionAnswered'],
       image: map['image'],
-      level: (map['level']).toString().parse,
+      level: map['level'].toString().parse,
     );
   }
 
