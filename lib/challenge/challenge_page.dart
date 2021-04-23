@@ -54,6 +54,7 @@ class _ChallengePageState extends State<ChallengePage> {
         ),
       ),
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: pageController,
         children: widget.questions
             .map((e) => QuizWidget(
@@ -70,7 +71,12 @@ class _ChallengePageState extends State<ChallengePage> {
               Expanded(
                 child: NextButtonWidget.white(
                   label: "Pular",
-                  onTap: () {},
+                  onTap: () {
+                    pageController.nextPage(
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.linear,
+                    );
+                  },
                 ),
               ),
               SizedBox(
