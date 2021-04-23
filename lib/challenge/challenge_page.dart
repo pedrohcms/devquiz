@@ -1,3 +1,4 @@
+import 'package:dev_quiz/challenge/challenge_controller.dart';
 import 'package:dev_quiz/challenge/widgets/next_button/next_button_widget.dart';
 import 'package:dev_quiz/challenge/widgets/question_indicator/question_indicator_widget.dart';
 import 'package:dev_quiz/challenge/widgets/quiz/quiz_widget.dart';
@@ -14,6 +15,17 @@ class ChallengePage extends StatefulWidget {
 }
 
 class _ChallengePageState extends State<ChallengePage> {
+  final controller = ChallengeController();
+  final pageController = PageController();
+
+  @override
+  void initState() {
+    pageController.addListener(() {
+      controller.currentPage = pageController.page!.toInt() + 1;
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,13 +42,24 @@ class _ChallengePageState extends State<ChallengePage> {
                   Navigator.pop(context);
                 },
               ),
-              QuestionIndicatorWidget(),
+              ValueListenableBuilder<int>(
+                valueListenable: controller.currentPageNotifier,
+                builder: (context, value, _) => QuestionIndicatorWidget(
+                  currentPage: value,
+                  length: widget.questions.length,
+                ),
+              ),
             ],
           ),
         ),
       ),
-      body: QuizWidget(
-        question: widget.questions[0],
+      body: PageView(
+        controller: pageController,
+        children: widget.questions
+            .map((e) => QuizWidget(
+                  question: e,
+                ))
+            .toList(),
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 6, right: 20, left: 20),
